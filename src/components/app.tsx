@@ -1,5 +1,8 @@
+/* @jsx h */
 import { FunctionalComponent, h } from "preact";
 import { Route, Router, RouterOnChangeArgs } from "preact-router";
+import { ChakraProvider, CSSReset } from "@chakra-ui/core";
+import theme from "@chakra-ui/theme";
 
 import Home from "../routes/home";
 
@@ -17,9 +20,18 @@ const App: FunctionalComponent = () => {
 
     return (
         <div id="app">
-            <Router onChange={handleRoute}>
-                <Route path="/" component={Home} default />
-            </Router>
+            {/* @ts-ignore */}
+            <ChakraProvider theme={theme}>
+                {/* @ts-ignore */}
+                <CSSReset />
+                <Router onChange={handleRoute}>
+                    <Route
+                        path="/"
+                        component={(Home as unknown) as FunctionalComponent}
+                        default
+                    />
+                </Router>
+            </ChakraProvider>
         </div>
     );
 };
