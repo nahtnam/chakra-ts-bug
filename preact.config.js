@@ -20,6 +20,15 @@ export default {
             }
         });
 
+        // weird issue with duplicate txt files, probably due to chakra ui
+        if (config.optimization.minimizer) {
+            config.optimization.minimizer.forEach(plugin => {
+                if (plugin.options && plugin.options.extractComments) {
+                    plugin.options.extractComments = false;
+                }
+            });
+        }
+
         // Use any `index` file, not just index.js
         config.resolve.alias["preact-cli-entrypoint"] = resolve(
             process.cwd(),
